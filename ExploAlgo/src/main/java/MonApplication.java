@@ -22,7 +22,7 @@ import java.util.PriorityQueue;
 import static io.jbotsim.ui.icons.Icons.FLAG;
 
 /**
- * 
+ *
  * @author maud
  */
 public class MonApplication implements ActionListener, SelectionListener {
@@ -30,11 +30,13 @@ public class MonApplication implements ActionListener, SelectionListener {
     JTopology jtp; // Composant graphique qui affiche le graphe
     Node source = null;
     Node destination = null;
-    HashSet<Node> pointAEviter = new HashSet<Node>();
+    HashSet<Node> pointAEviter = new HashSet<>();
     Boolean estCherche = false;
 
     /**
      * Constructeur
+     *
+     * @author maud
      */
     public MonApplication() {
         // Création du graphe
@@ -45,8 +47,9 @@ public class MonApplication implements ActionListener, SelectionListener {
 
     /**
      * Main
-     * 
-     * @param args
+     *
+     * @param args the command line arguments
+     * @author maud
      */
     public static void main(String[] args) {
         new MonApplication();
@@ -54,6 +57,8 @@ public class MonApplication implements ActionListener, SelectionListener {
     
     /**
      * Crée une Inteface Graphique
+     *
+     * @author maud
      */
     private void creerInterfaceGraphique() {
         // Création d'une fenêtre
@@ -90,7 +95,8 @@ public class MonApplication implements ActionListener, SelectionListener {
     /**
      * Se déclanche quand un bouton est cliqué
      * 
-     * @param e
+     * @param e Evènement
+     * @author maud
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -112,6 +118,9 @@ public class MonApplication implements ActionListener, SelectionListener {
 
     /**
      * Réinitialise le graphe et les noeuds
+     *
+     * @param tp Topologie
+     * @author maud
      */
     public void reinitialisation(Topology tp){
         this.source = null;
@@ -129,7 +138,9 @@ public class MonApplication implements ActionListener, SelectionListener {
 
     /**
      * Gère les évènements de selection des noeuds
-     * @param selectedNode
+     *
+     * @param selectedNode Noeud sélectionné
+     * @author maud
      */
     @Override
     public void onSelection(Node selectedNode) {
@@ -162,11 +173,12 @@ public class MonApplication implements ActionListener, SelectionListener {
     /**
      * Cherche le chemin le plus court entre la source et la destination
      *
-     * @param source
-     * @param destination
+     * @param source Noeud source
+     * @param destination  Noeud destination
+     * @author maud
      */
     private void chercherChemin(Node source, Node destination){
-            HashMap<Node,Node> allChemin = ParcoursEnLargeur(tp, source, destination);
+            HashMap<Node,Node> allChemin = ParcoursEnLargeur(source, destination);
             if (allChemin.containsKey(destination)) {
                 HashMap<Node,Node> chemin = ExtraireChemin(allChemin, source, destination);
                 for (Node n : tp.getNodes()){
@@ -182,9 +194,11 @@ public class MonApplication implements ActionListener, SelectionListener {
 
     /**
      * Retourne la distance entre un noeud et la destination
-     * @param n
-     * @param path
-     * @return
+     *
+     * @param n Noeud
+     * @param path Chemin
+     * @return Distance entre le noeud et la destination
+     * @author maud
      */
     private double DistanceDestPointSource(Node n, HashMap<Node, Node> path){
         double dist = 0;
@@ -201,14 +215,15 @@ public class MonApplication implements ActionListener, SelectionListener {
     /**
      * Retoune la liste des noeuds et leurs parents du parcours en largeur
      * jusqu'à ce qu'on arrive à la destination
-     * @param tp
-     * @param source
-     * @param destination
-     * @return
+     *
+     * @param source Noeud source
+     * @param destination Noeud destination
+     * @return Liste des noeuds et leurs parents du parcours en largeur
+     * @author maud
      */
-    private HashMap<Node,Node> ParcoursEnLargeur(Topology tp, Node source, Node destination){
-        HashMap<Node, Node> path = new HashMap<Node, Node>();
-        PriorityQueue<Node> file = new PriorityQueue<Node>(new Comparator<>() {
+    private HashMap<Node,Node> ParcoursEnLargeur(Node source, Node destination){
+        HashMap<Node, Node> path = new HashMap<>();
+        PriorityQueue<Node> file = new PriorityQueue<>(new Comparator<>() {
             @Override
             public int compare(Node n1, Node n2) {
                 return Double.compare (DistanceDestPointSource(n1, path),  DistanceDestPointSource(n2, path));
@@ -235,13 +250,14 @@ public class MonApplication implements ActionListener, SelectionListener {
      * On retrouve le chemin en partant de la destination et en remontant
      * jusqu'à la source
      *
-     * @param allChemin
-     * @param source
-     * @param destination
-     * @return
+     * @param allChemin Liste des noeuds et leurs parents du parcours en largeur
+     * @param source Noeud source
+     * @param destination Noeud destination
+     * @return Chemin le plus court entre la source et la destination
+     * @author maud
      */
     public HashMap<Node,Node> ExtraireChemin(HashMap<Node, Node> allChemin, Node source, Node destination){
-        HashMap<Node,Node> cheminVersDest = new HashMap<Node,Node>();
+        HashMap<Node,Node> cheminVersDest = new HashMap<>();
         if (allChemin.containsKey(destination)){
             Node dest = allChemin.get(destination);
             cheminVersDest.put(destination, dest);
@@ -256,8 +272,9 @@ public class MonApplication implements ActionListener, SelectionListener {
     /**
      * Genere une topologie avec des noeuds et des liens sous forme de grille
      *
-     * @param tp
-     * @param nbRows
+     * @param tp Topologie
+     * @param nbRows Nombre de lignes
+     * @author maud
      */
     public static void genererGrille(Topology tp, int nbRows){
         int stepX = (tp.getWidth() - 100) / (nbRows - 1);
