@@ -28,10 +28,10 @@ import static io.jbotsim.ui.icons.Icons.FLAG;
 public class MonApplication implements ActionListener, SelectionListener {
     Topology tp; // Objet qui contient le graphe
     JTopology jtp; // Composant graphique qui affiche le graphe
-    Node source = null;
-    Node destination = null;
-    HashSet<Node> pointAEviter = new HashSet<>();
-    Boolean estCherche = false;
+    Node source = null; // noeud source
+    Node destination = null; // noeud destination
+    HashSet<Node> pointAEviter = new HashSet<>(); // ensemble des noeuds a eviter
+    Boolean estCherche = false; // vrai si on cherche un chemin, faux sinon
 
     /**
      * Constructeur
@@ -39,9 +39,9 @@ public class MonApplication implements ActionListener, SelectionListener {
      * @author maud
      */
     public MonApplication() {
-        // Création du graphe
+        // Creation du graphe
         tp = new Topology();
-        // Création de l'interface graphique (ci-dessous)
+        // Creation de l'interface graphique (ci-dessous)
         creerInterfaceGraphique();
     }
 
@@ -56,32 +56,32 @@ public class MonApplication implements ActionListener, SelectionListener {
     } 
     
     /**
-     * Crée une Inteface Graphique
+     * Cree une Inteface Graphique
      *
      * @author maud
      */
     private void creerInterfaceGraphique() {
-        // Création d'une fenêtre
+        // Creation d'une fenêtre
         JFrame window = new JFrame("Mon application");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Création du composant graphique qui affiche le graphe
+        // Creation du composant graphique qui affiche le graphe
         jtp = new JTopology(tp);
         window.add(jtp);
 
-        // Création d'un bouton test haut
-        JButton button = new JButton("Réinitialisation");
+        // Creation d'un bouton test haut
+        JButton button = new JButton("Reinitialisation");
         window.add(button,BorderLayout.NORTH);
 
-        // Création d'un bouton test est
-        JButton button2 = new JButton("Générer grilles");
+        // Creation d'un bouton test est
+        JButton button2 = new JButton("Generer grilles");
         window.add(button2,BorderLayout.EAST);
 
-        // Création d'un bouton test bas
+        // Creation d'un bouton test bas
         JButton button3 = new JButton("Chercher chemin");
         window.add(button3,BorderLayout.SOUTH);
         
-        // Abonnement aux évènements des boutons (clic, etc.)
+        // Abonnement aux evenements des boutons (clic, etc.)
         button.addActionListener(this);
         button2.addActionListener(this);
         button3.addActionListener(this);
@@ -93,14 +93,14 @@ public class MonApplication implements ActionListener, SelectionListener {
     }
     
     /**
-     * Se déclanche quand un bouton est cliqué
+     * Se declanche quand un bouton est clique
      * 
-     * @param e Evènement
+     * @param e Evenement
      * @author maud
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Réinitialisation")) {
+        if (e.getActionCommand().equals("Reinitialisation")) {
             reinitialisation(tp);
         }
         else if (e.getActionCommand().equals("Chercher chemin")) {
@@ -108,16 +108,16 @@ public class MonApplication implements ActionListener, SelectionListener {
                 && tp.getNodes().contains(this.destination)) {
               chercherChemin(this.source, this.destination);
           } else {
-              JOptionPane.showMessageDialog(null, "Veuillez sélectionner une source et une destination");
+              JOptionPane.showMessageDialog(null, "Veuillez selectionner une source et une destination");
           }
         }
-        else if (e.getActionCommand().equals("Générer grilles")) {
+        else if (e.getActionCommand().equals("Generer grilles")) {
             genererGrille(tp,6);
         }
     }
 
     /**
-     * Réinitialise le graphe et les noeuds
+     * Reinitialise le graphe et les noeuds
      *
      * @param tp Topologie
      * @author maud
@@ -137,9 +137,9 @@ public class MonApplication implements ActionListener, SelectionListener {
     }
 
     /**
-     * Gère les évènements de selection des noeuds
+     * Gere les evenements de selection des noeuds
      *
-     * @param selectedNode Noeud sélectionné
+     * @param selectedNode Noeud selectionne
      * @author maud
      */
     @Override
@@ -166,7 +166,7 @@ public class MonApplication implements ActionListener, SelectionListener {
             }
         }
         else {
-            JOptionPane.showMessageDialog(null, "Veuillez Réinitialiser");
+            JOptionPane.showMessageDialog(null, "Veuillez Reinitialiser");
         }
     }
 
@@ -214,7 +214,7 @@ public class MonApplication implements ActionListener, SelectionListener {
 
     /**
      * Retoune la liste des noeuds et leurs parents du parcours en largeur
-     * jusqu'à ce qu'on arrive à la destination
+     * jusqu'a ce qu'on arrive a la destination
      *
      * @param source Noeud source
      * @param destination Noeud destination
@@ -248,7 +248,7 @@ public class MonApplication implements ActionListener, SelectionListener {
     /**
      * Retourne le chemin le plus court entre la source et la destination
      * On retrouve le chemin en partant de la destination et en remontant
-     * jusqu'à la source
+     * jusqu'a la source
      *
      * @param allChemin Liste des noeuds et leurs parents du parcours en largeur
      * @param source Noeud source
@@ -280,7 +280,7 @@ public class MonApplication implements ActionListener, SelectionListener {
         int stepX = (tp.getWidth() - 100) / (nbRows - 1);
         int stepY = (tp.getHeight() - 100) / (nbRows - 1);
         if (Math.max(stepX, stepY) >= 2 * Math.min(stepX, stepY)){
-            String s = "les proportions de la topologie sont inadaptées";
+            String s = "les proportions de la topologie sont inadaptees";
             JOptionPane.showMessageDialog(null, s);
             return;
         }
