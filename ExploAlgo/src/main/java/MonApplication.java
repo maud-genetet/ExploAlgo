@@ -70,14 +70,19 @@ public class MonApplication implements ActionListener, SelectionListener {
         // Création d'un bouton test haut
         JButton button = new JButton("Réinitialisation");
         window.add(button,BorderLayout.NORTH);
-        
+
+        // Création d'un bouton test est
+        JButton button2 = new JButton("Générer grilles");
+        window.add(button2,BorderLayout.EAST);
+
         // Création d'un bouton test bas
-        JButton button2 = new JButton("Chercher chemin");
-        window.add(button2,BorderLayout.SOUTH);
+        JButton button3 = new JButton("Chercher chemin");
+        window.add(button3,BorderLayout.SOUTH);
         
         // Abonnement aux évènements des boutons (clic, etc.)
         button.addActionListener(this);
         button2.addActionListener(this);
+        button3.addActionListener(this);
         tp.addSelectionListener(this);
 
         // Finalisation
@@ -93,17 +98,18 @@ public class MonApplication implements ActionListener, SelectionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Réinitialisation")) {
-        /*    JOptionPane.showMessageDialog(null, "Bouton cliqué");*/
             Reinitialistation();
         }
         else if (e.getActionCommand().equals("Chercher chemin")) {
-          /*  JOptionPane.showMessageDialog(null, "Bouton 2 cliqué");*/
           if ( this.source!=null && this.destination!=null &&  tp.getNodes().contains(this.source) 
                 && tp.getNodes().contains(this.destination)) {
               chercherChemin(this.source, this.destination);
           } else {
               JOptionPane.showMessageDialog(null, "Veuillez sélectionner une source et une destination");
           }
+        }
+        else if (e.getActionCommand().equals("Générer grilles")) {
+            genererGrille(tp,6);
         }
     }
     
@@ -155,12 +161,7 @@ public class MonApplication implements ActionListener, SelectionListener {
     }
     
     private void chercherChemin(Node source, Node destination){
-            HashMap<Node,Node> allChemin = ParcoursEnLargeur(tp, source, destination);;
-            for (Node n : tp.getNodes()){
-                    if (allChemin.containsKey(n) && allChemin.get(n)!=n){
-                        n.getCommonLinkWith(allChemin.get(n)).setWidth(2);
-                    }
-                }
+            HashMap<Node,Node> allChemin = ParcoursEnLargeur(tp, source, destination);
             if (allChemin.containsKey(destination)) {
                 HashMap<Node,Node> chemin = ExtraireChemin(allChemin, source, destination);
                 for (Node n : tp.getNodes()){
@@ -222,7 +223,22 @@ public class MonApplication implements ActionListener, SelectionListener {
         }
         return cheminVersDest;
     }
-    
+
+    public static void genererGrille(Topology tp, int nbRows){
+        int stepX = (tp.getWidth() - 100) / (nbRows - 1);
+        int stepY = (tp.getHeight() - 100) / (nbRows - 1);
+        if (Math.max(stepX, stepY) >= 2 * Math.min(stepX, stepY)){
+            String s = "les proportions de la topologie sont inadaptées";
+            JOptionPane.showMessageDialog(null, s);
+            return;
+        }
+        tp.setCommunicationRange(Math.max(stepX, stepY)+1);
+        for (int i = 50; i <= tp.getWidth() - 50; i += stepX){
+            for (int j = 50; j <= tp.getHeight() - 50; j += stepY) {
+                tp.addNode(i, j, new Node());
+            }
+        }
+    }
 }
 
 
