@@ -144,7 +144,7 @@ public class MonApplication implements ActionListener, SelectionListener {
      */
     @Override
     public void onSelection(Node selectedNode) {
-        if ( (this.source == null || !tp.getNodes().contains(this.source)) 
+        if ( (this.source == null || !tp.getNodes().contains(this.source))
                 && (this.source!=this.destination || this.destination==null)){
                 this.source = selectedNode;
                 this.source.setColor(Color.BLACK);
@@ -177,7 +177,7 @@ public class MonApplication implements ActionListener, SelectionListener {
      * @param destination  Noeud destination
      * @author maud
      */
-    private void chercherChemin(Node source, Node destination){
+    private void chercherChemin(Node source, Node destination) {
             HashMap<Node,Node> allChemin = ParcoursEnLargeur(source, destination);
             if (allChemin.containsKey(destination)) {
                 HashMap<Node,Node> chemin = ExtraireChemin(allChemin, source, destination);
@@ -200,7 +200,7 @@ public class MonApplication implements ActionListener, SelectionListener {
      * @return Distance entre le noeud et la destination
      * @author maud
      */
-    private double DistanceDestPointSource(Node n, HashMap<Node, Node> path){
+    public double DistanceDestPointSource(Node n, HashMap<Node, Node> path, Node destination){
         double dist = 0;
         Node n1 = destination;
         Node a = n;
@@ -221,12 +221,12 @@ public class MonApplication implements ActionListener, SelectionListener {
      * @return Liste des noeuds et leurs parents du parcours en largeur
      * @author maud
      */
-    private HashMap<Node,Node> ParcoursEnLargeur(Node source, Node destination){
+    public HashMap<Node,Node> ParcoursEnLargeur(Node source, Node destination){
         HashMap<Node, Node> path = new HashMap<>();
         PriorityQueue<Node> file = new PriorityQueue<>(new Comparator<>() {
             @Override
             public int compare(Node n1, Node n2) {
-                return Double.compare (DistanceDestPointSource(n1, path),  DistanceDestPointSource(n2, path));
+                return Double.compare (DistanceDestPointSource(n1, path, destination),  DistanceDestPointSource(n2, path, destination));
             }
         });
         file.add(source);
