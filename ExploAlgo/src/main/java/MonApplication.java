@@ -9,20 +9,17 @@ import io.jbotsim.core.Node;
 import io.jbotsim.core.Topology;
 import io.jbotsim.core.event.SelectionListener;
 import io.jbotsim.ui.JTopology;
-import static io.jbotsim.ui.icons.Icons.FLAG;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Stack;
+
+import static io.jbotsim.ui.icons.Icons.FLAG;
 
 /**
  * 
@@ -34,7 +31,7 @@ public class MonApplication implements ActionListener, SelectionListener {
     Node source = null;
     Node destination = null;
     HashSet<Node> pointAEviter = new HashSet<Node>();
-    Boolean estCherché = false;
+    Boolean estCherche = false;
 
     /**
      * Constructeur
@@ -98,7 +95,7 @@ public class MonApplication implements ActionListener, SelectionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Réinitialisation")) {
-            Reinitialistation();
+            reinitialisation(tp);
         }
         else if (e.getActionCommand().equals("Chercher chemin")) {
           if ( this.source!=null && this.destination!=null &&  tp.getNodes().contains(this.source) 
@@ -112,10 +109,11 @@ public class MonApplication implements ActionListener, SelectionListener {
             genererGrille(tp,6);
         }
     }
-    
-    private void Reinitialistation(){
-        this.source.setColor(null);
-        this.destination.setIcon(null);
+
+    /**
+     * Réinitialise le graphe et les noeuds
+     */
+    public void reinitialisation(Topology tp){
         this.source = null;
         this.destination = null;
         this.pointAEviter.clear();
@@ -124,12 +122,13 @@ public class MonApplication implements ActionListener, SelectionListener {
         }
         for (Node n : tp.getNodes()){
             n.setColor(null);
+            n.setIcon(null);
         }
-        estCherché = false;
+        estCherche = false;
     }
 
     /**
-     *
+     * Gère les évènements de selection des noeuds
      * @param selectedNode
      */
     @Override
@@ -138,14 +137,14 @@ public class MonApplication implements ActionListener, SelectionListener {
                 && (this.source!=this.destination || this.destination==null)){
                 this.source = selectedNode;
                 this.source.setColor(Color.BLACK);
-                estCherché = false;
+                estCherche = false;
         } else if ( (this.destination == null || !tp.getNodes().contains(this.destination))
                 && (this.destination!=this.source || this.source==null)) {
                 this.destination = selectedNode;
                 this.destination.setIcon(FLAG);
-                estCherché = false;
+                estCherche = false;
         }
-        else if ( !estCherché && this.destination!=null && this.source!=null) {
+        else if ( !estCherche && this.destination!=null && this.source!=null) {
             if (!pointAEviter.contains(selectedNode) 
                     && selectedNode!=this.destination && selectedNode!=source){
                 pointAEviter.add(selectedNode);
@@ -159,7 +158,13 @@ public class MonApplication implements ActionListener, SelectionListener {
             JOptionPane.showMessageDialog(null, "Veuillez Réinitialiser");
         }
     }
-    
+
+    /**
+     * Cherche le chemin le plus court entre la source et la destination
+     *
+     * @param source
+     * @param destination
+     */
     private void chercherChemin(Node source, Node destination){
             HashMap<Node,Node> allChemin = ParcoursEnLargeur(tp, source, destination);
             if (allChemin.containsKey(destination)) {
@@ -169,12 +174,18 @@ public class MonApplication implements ActionListener, SelectionListener {
                         n.getCommonLinkWith(chemin.get(n)).setWidth(4);
                     }
                 }
-                estCherché = true;
+                estCherche = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Il n'y a pas de chemin possible");
             }
     }
-    
+
+    /**
+     * Retourne la distance entre un noeud et la destination
+     * @param n
+     * @param path
+     * @return
+     */
     private double DistanceDestPointSource(Node n, HashMap<Node, Node> path){
         double dist = 0;
         Node n1 = destination;
@@ -186,7 +197,15 @@ public class MonApplication implements ActionListener, SelectionListener {
         }
         return dist;
     }
-    
+
+    /**
+     * Retoune la liste des noeuds et leurs parents du parcours en largeur
+     * jusqu'à ce qu'on arrive à la destination
+     * @param tp
+     * @param source
+     * @param destination
+     * @return
+     */
     private HashMap<Node,Node> ParcoursEnLargeur(Topology tp, Node source, Node destination){
         HashMap<Node, Node> path = new HashMap<Node, Node>();
         PriorityQueue<Node> file = new PriorityQueue<Node>(new Comparator<>() {
@@ -210,7 +229,17 @@ public class MonApplication implements ActionListener, SelectionListener {
         }
         return path;
     }
-    
+
+    /**
+     * Retourne le chemin le plus court entre la source et la destination
+     * On retrouve le chemin en partant de la destination et en remontant
+     * jusqu'à la source
+     *
+     * @param allChemin
+     * @param source
+     * @param destination
+     * @return
+     */
     public HashMap<Node,Node> ExtraireChemin(HashMap<Node, Node> allChemin, Node source, Node destination){
         HashMap<Node,Node> cheminVersDest = new HashMap<Node,Node>();
         if (allChemin.containsKey(destination)){
@@ -224,6 +253,12 @@ public class MonApplication implements ActionListener, SelectionListener {
         return cheminVersDest;
     }
 
+    /**
+     * Genere une topologie avec des noeuds et des liens sous forme de grille
+     *
+     * @param tp
+     * @param nbRows
+     */
     public static void genererGrille(Topology tp, int nbRows){
         int stepX = (tp.getWidth() - 100) / (nbRows - 1);
         int stepY = (tp.getHeight() - 100) / (nbRows - 1);
