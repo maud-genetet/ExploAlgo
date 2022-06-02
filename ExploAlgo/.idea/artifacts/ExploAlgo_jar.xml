@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ExploAlgo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ExploAlgo_jar</output-path>
+    <root id="archive" name="ExploAlgo.jar">
+      <element id="module-output" name="ExploAlgo" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-core/1.2.0/jbotsim-core-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-all/1.2.0/jbotsim-all-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-icons/1.2.0/jbotsim-icons-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter/5.9.0-M1/junit-jupiter-5.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-ui-common/1.2.0/jbotsim-ui-common-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-params/5.9.0-M1/junit-jupiter-params-5.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.9.0-M1/junit-platform-commons-1.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-extras-common/1.2.0/jbotsim-extras-common-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-ui-swing/1.2.0/jbotsim-ui-swing-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-extras-swing/1.2.0/jbotsim-extras-swing-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.13.1/junit-4.13.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/antlr/antlr4-runtime/4.7.2/antlr4-runtime-4.7.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.9.0-M1/junit-jupiter-engine-5.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.9.0-M1/junit-platform-engine-1.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.9.0-M1/junit-jupiter-api-5.9.0-M1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/jbotsim/jbotsim-serialization-common/1.2.0/jbotsim-serialization-common-1.2.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

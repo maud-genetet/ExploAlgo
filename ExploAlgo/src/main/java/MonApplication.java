@@ -276,16 +276,16 @@ public class MonApplication implements ActionListener, SelectionListener {
      * @param nbRows Nombre de lignes
      * @author maud
      */
-    public static void genererGrille(Topology tp, int nbRows){
+    public static void genererGrille(Topology tp, int nbRows) {
         int stepX = (tp.getWidth() - 100) / (nbRows - 1);
         int stepY = (tp.getHeight() - 100) / (nbRows - 1);
-        if (Math.max(stepX, stepY) >= 2 * Math.min(stepX, stepY)){
+        if (Math.max(stepX, stepY) >= 2 * Math.min(stepX, stepY)) {
             String s = "les proportions de la topologie sont inadaptees";
             JOptionPane.showMessageDialog(null, s);
             return;
         }
-        tp.setCommunicationRange(Math.max(stepX, stepY)+1);
-        for (int i = 50; i <= tp.getWidth() - 50; i += stepX){
+        tp.setCommunicationRange(Math.max(stepX, stepY) + 1);
+        for (int i = 50; i <= tp.getWidth() - 50; i += stepX) {
             for (int j = 50; j <= tp.getHeight() - 50; j += stepY) {
                 tp.addNode(i, j, new Node());
             }
